@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.pytest_cache/
+.DS_Store
+.vscode/
+.idea/
+# Datasets grandes e modelos gerados (regenerar com src/train.py)
+data/*.csv
+models/*.joblib
