@@ -9,12 +9,12 @@ A análise é **estática**: o sistema nunca acede ao URL analisado.
 
 | Pasta / ficheiro | Responsável | Conteúdo |
 |---|---|---|
-| `data/` | P1 | Dataset (não versionado; ver origem e licença abaixo) |
-| `src/features.py` | P1 | `extract_features(url) -> dict` |
-| `src/train.py` | P2 | Treino e comparação LR vs DT |
-| `src/predict.py` | P2/P3 | `predict(url) -> {label, prob, razoes}` |
-| `src/app.py`, `src/validation.py` | P3 | Interface e validação de input |
-| `tests/` | P4 | Testes unitários (pytest) |
+| `data/` | P1 — Leo | Dataset (não versionado; ver origem e licença abaixo) |
+| `src/features.py` | P1 — Leo | `extract_features(url) -> dict` |
+| `src/train.py` | P2 — Luz | Treino e comparação LR vs DT |
+| `src/predict.py` | Luz / Ricardo | `predict(url) -> {label, prob, razoes}` |
+| `src/app.py`, `src/validation.py` | P3 — Ricardo | Interface e validação de input |
+| `tests/` | P4 — David | Testes unitários (pytest) |
 | `evidencias/` | Todos | Evidências com o ID (ex.: `EVD03_matriz_confusao.png`) |
 
 ## Instalação
