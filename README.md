@@ -36,7 +36,7 @@ pytest -v
 
 ## Fluxo de trabalho
 
-1. Pegar numa issue (TAR01–TAR09) e criar um ramo com o ID: `git checkout -b TAR02-features`
+1. Utilizar numa issue (TAR01–TAR09) e criar um ramo com o ID: `git checkout -b TAR02-features`
 2. Commits com o ID: `TAR02: adicionar contagem de subdomínios`
 3. Abrir pull request; revisão por outro elemento (P1↔P2, P3↔P4)
 4. Merge para `main` só após aprovação
