@@ -19,7 +19,11 @@ def test_predict_respeita_contrato():
     assert isinstance(r["razoes"], list)
 
 
-@pytest.mark.parametrize("entrada", ["", "   ", None, "a" * 3000])
+@pytest.mark.parametrize(
+    "entrada",
+    ["", "   ", None, "a" * 3000],
+    ids=["vazio", "espacos", "none", "demasiado_longo"],
+)
 def test_validacao_rejeita_entradas_invalidas(entrada):  # TST04 / REQ04
     with pytest.raises(ValueError):
         validate_url(entrada)
