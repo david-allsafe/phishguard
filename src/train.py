@@ -158,7 +158,7 @@ def main() -> None:
     HASH_PATH.write_text(f"{_sha256(MODEL_PATH)}  {MODEL_PATH.name}\n")
 
     EVID.mkdir(exist_ok=True)
-    (EVID / "EVD02_resultados_treino.json").write_text(json.dumps(resultados, indent=2, ensure_ascii=False))
+    (EVID / "EVD03_resultados_treino.json").write_text(json.dumps(resultados, indent=2, ensure_ascii=False))
     fig, axes = plt.subplots(1, 2, figsize=(10, 4))
     for ax, (nome, m) in zip(axes, candidatos.items()):
         pred = (m.predict_proba(X_te)[:, 1] >= thr[nome]).astype(int)

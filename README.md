@@ -64,7 +64,7 @@ docker run --rm -p 8501:8501 phishguard
 
 Divisão 70/15/15 estratificada, semente 42 e pesos de classe equilibrados. A profundidade da
 árvore e os limiares foram escolhidos no conjunto de validação. Os valores completos estão em
-`evidencias/EVD02_resultados_treino.json` e `evidencias/EVD03_matriz_confusao.png`.
+`evidencias/EVD03_resultados_treino.json` e `evidencias/EVD03_matriz_confusao.png`.
 
 ## Limitações
 

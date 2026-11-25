@@ -22,7 +22,7 @@ def sem_rede(monkeypatch):
     monkeypatch.setattr(socket, "getaddrinfo", bloquear)
 
 
-def test_req06_predict_nao_acede_a_rede(sem_rede):  # TST06
+def test_req06_predict_nao_acede_a_rede(sem_rede):  # TST07 (parte automática)
     r = predict("http://secure-login.cgd-verify-account.xyz/update")
     assert r["label"] in {"phishing", "legitimo"}
 
@@ -77,7 +77,7 @@ def test_req04_aceita_url_normal():
 
 # --- Integridade do modelo ----------------------------------------------------------
 
-def test_modelo_alterado_e_rejeitado(tmp_path):  # TST09
+def test_modelo_alterado_e_rejeitado(tmp_path):  # TST08
     modelo = tmp_path / "m.joblib"
     shutil.copy(predict_mod.MODEL_PATH, modelo)
     with open(modelo, "ab") as f:
@@ -91,11 +91,12 @@ def test_modelo_alterado_e_rejeitado(tmp_path):  # TST09
 # "URL com caminho = phishing" (ver Limitações no README).
 
 @pytest.mark.parametrize("url", [
+    "https://www.istec.pt",
     "https://pt.wikipedia.org/wiki/Phishing",
     "https://github.com/david-allsafe/phishguard/pull/10",
     "https://www.cgd.pt/Particulares/Pages/Particulares_v2.aspx",
 ])
-def test_sanidade_legitimos_com_caminho(url):
+def test_sanidade_legitimos_com_caminho(url):  # TST01
     assert predict(url)["label"] == "legitimo"
 
 
@@ -104,5 +105,15 @@ def test_sanidade_legitimos_com_caminho(url):
     "https://www.paypal.com@evil-example.tk/signin",
     "http://secure-login.cgd-verify-account.xyz/update",
 ])
-def test_sanidade_phishing_construido(url):
+def test_sanidade_phishing_construido(url):  # TST02
     assert predict(url)["label"] == "phishing"
+
+
+# --- REQ05: tempo de resposta -------------------------------------------------------
+
+def test_req05_tempo_de_resposta():  # TST06
+    import time
+    predict("https://www.istec.pt")  # o primeiro pedido carrega o modelo
+    t0 = time.perf_counter()
+    predict("http://secure-login.cgd-verify-account.xyz/update")
+    assert time.perf_counter() - t0 < 1.0
