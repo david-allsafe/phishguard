@@ -40,22 +40,18 @@ O modelo treinado (`models/phishguard.joblib`) está versionado. O formato jobli
 código ao ser carregado, por isso o `predict.py` compara primeiro o SHA-256 do ficheiro com o valor
 em `models/phishguard.joblib.sha256`. Um modelo alterado é rejeitado.
 
-### Docker e Hugging Face Spaces
+### Versão online
+
+O protótipo está publicado no Streamlit Community Cloud: https://phishguard-istec.streamlit.app
+
+O deploy é feito a partir deste repositório (ficheiro principal `src/web.py`). Cada push para o
+ramo configurado atualiza a app.
+
+### Docker
 
 ```bash
 docker build -t phishguard .
 docker run --rm -p 8501:8501 phishguard
-```
-
-Para publicar no Hugging Face Spaces, criar um Space do tipo **Docker** e enviar o `Dockerfile`,
-o `requirements.txt` e as pastas `src/` e `models/`. O README do Space deve ter este cabeçalho:
-
-```yaml
----
-title: PhishGuard
-sdk: docker
-app_port: 8501
----
 ```
 
 ## Resultados (conjunto de teste, 26 309 domínios)

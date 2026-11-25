@@ -59,7 +59,7 @@ def explain(url: str, features: dict) -> list:
     if s["num_subdomains"] >= 2:
         razoes.append(f"Tem {s['num_subdomains']} subdomínios.")
     if features["domain_num_hyphens"] >= 1:
-        razoes.append("O domínio tem hífens (ex.: marca-seguranca).")
+        razoes.append("O domínio tem hífens (ex.: marca-segurança).")
     if features["domain_num_digits"] >= 3:
         razoes.append("O domínio tem vários dígitos.")
     if s["tld_abused"]:
