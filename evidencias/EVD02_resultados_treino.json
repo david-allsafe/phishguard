@@ -1,7 +1,7 @@
 {
-  "data_treino": "2026-11-25T14:50:54+00:00",
+  "data_treino": "2026-11-25T15:55:20+00:00",
   "semente": 42,
-  "sklearn": "1.5.2",
+  "sklearn": "1.9.1",
   "dataset": {
     "linhas_originais": 235795,
     "urls_unicos": 235370,
@@ -31,9 +31,9 @@
     "4": 0.4543,
     "6": 0.4898,
     "8": 0.4996,
-    "10": 0.4996,
-    "12": 0.4935,
-    "16": 0.4892
+    "10": 0.4997,
+    "12": 0.4939,
+    "16": 0.4895
   },
   "arvore_profundidade_escolhida": 10,
   "f1_validacao": {
@@ -46,8 +46,8 @@
   },
   "modelo_escolhido": "arvore_decisao",
   "tempo_treino_s": {
-    "regressao_logistica": 0.16,
-    "arvore_decisao": 0.16
+    "regressao_logistica": 0.11,
+    "arvore_decisao": 0.17
   },
   "teste": {
     "baseline_classe_maioritaria": {
