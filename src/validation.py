@@ -1,4 +1,4 @@
-"""TAR05/TAR08 — Validação de input (REQ04)."""
+"""TAR05/TAR08 - Validação de input (REQ04)."""
 
 from urllib.parse import urlsplit
 
@@ -9,8 +9,8 @@ ALLOWED_SCHEMES = {"http", "https"}
 def validate_url(url: str) -> str:
     """Devolve o URL limpo ou lança ValueError com mensagem para o utilizador.
 
-    Só aceita URLs http/https com domínio. Rejeita esquemas perigosos (javascript:,
-    data:, file:) e caracteres de controlo. Nunca acede ao URL (REQ06).
+    Aceita apenas URLs http ou https com domínio. Rejeita esquemas perigosos
+    (javascript:, data:, file:) e caracteres de controlo. Não acede ao URL (REQ06).
     """
     if url is None or not str(url).strip():
         raise ValueError("O URL não pode estar vazio.")

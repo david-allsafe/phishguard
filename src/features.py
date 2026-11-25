@@ -1,16 +1,14 @@
-"""TAR02 (P1) — Extração de features de um URL.
+"""TAR02 (P1) - Extração de features de um URL.
 
-Contrato: extract_features(url: str) -> dict[str, float]
-Regra: nunca aceder à rede (REQ06). As mesmas features são usadas no treino e na app.
+extract_features(url) devolve as features usadas pelo modelo.
+Não acede à rede (REQ06). O treino e a app usam esta mesma função.
 
-Decisão de desenho (fuga de informação no dataset):
-No PhiUSIIL, 100% dos URLs legítimos são páginas iniciais com https://www. e sem caminho,
-enquanto os de phishing têm caminhos, http e subdomínios variados. Um modelo treinado com
-o URL completo aprende esse atalho (ex.: classifica https://pt.wikipedia.org/wiki/Phishing
-como phishing só por ter caminho). Por isso, o modelo usa apenas features do DOMÍNIO
-REGISTADO (ex.: "paypal-secure" + "xyz"), que existem de forma comparável nas duas classes.
-Os sinais do URL completo (esquema, caminho, subdomínios, '@') são avaliados à parte, em
-url_signals(), e mostrados ao utilizador como razões, mas não entram no modelo.
+Porque é que só usamos o domínio:
+No PhiUSIIL, os URLs legítimos são todos do tipo https://www.site.com, sem caminho.
+Quando treinámos com o URL completo, o modelo classificava como phishing qualquer
+URL com caminho (por exemplo, a Wikipedia). Por isso, o modelo só vê o domínio registado.
+O resto do URL (https, @, subdomínios) serve apenas para explicar o resultado,
+na função url_signals().
 """
 
 import ipaddress
@@ -20,8 +18,7 @@ from urllib.parse import parse_qsl, urlsplit
 
 import tldextract
 
-# suffix_list_urls=() obriga o tldextract a usar a lista de sufixos incluída no pacote,
-# sem a descarregar da Internet (REQ06).
+# Usa a lista de sufixos incluída no tldextract, sem a descarregar da Internet (REQ06).
 _EXTRACT = tldextract.TLDExtract(suffix_list_urls=())
 
 SUSPICIOUS_WORDS = (
@@ -29,7 +26,7 @@ SUSPICIOUS_WORDS = (
     "confirm", "password", "wallet", "webscr", "billing", "support", "auth",
 )
 
-# TLDs frequentemente abusados em campanhas de phishing (lista heurística, não exaustiva).
+# TLDs frequentemente usados em phishing. Lista definida por nós, não exaustiva.
 ABUSED_TLDS = {
     "tk", "ml", "ga", "cf", "gq", "xyz", "top", "click", "link", "info", "online",
     "site", "live", "icu", "buzz", "rest", "shop", "work", "support", "cyou", "sbs",

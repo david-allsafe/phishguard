@@ -1,10 +1,11 @@
-"""TAR06 (P2/P3) — Interface entre o modelo e a aplicação.
+"""TAR06 (P2/P3) - Ligação entre o modelo e a aplicação.
 
 Contrato: predict(url: str) -> {"label": "phishing" | "legitimo", "prob": float, "razoes": list[str]}
 "prob" é a probabilidade estimada de o URL ser phishing (0 a 1).
 
-Segurança: o modelo é um ficheiro joblib (pickle), que executa código ao ser carregado.
-Antes de o carregar, verificamos o SHA-256 contra o valor registado no treino.
+Segurança: o modelo é guardado em joblib (formato pickle), que pode executar código
+ao ser carregado. Por isso, antes de o carregar, comparamos o SHA-256 do ficheiro
+com o valor gerado no treino.
 """
 
 import hashlib
@@ -46,7 +47,7 @@ def load_bundle(model_path: Path = MODEL_PATH, hash_path: Path = HASH_PATH) -> d
 
 
 def explain(url: str, features: dict) -> list:
-    """Razões legíveis (regras sobre o URL completo; não dependem do modelo)."""
+    """Gera as razões mostradas ao utilizador, com regras sobre o URL completo. Não depende do modelo."""
     s = url_signals(url)
     razoes = []
     if s["has_ip"]:

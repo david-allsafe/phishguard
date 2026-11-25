@@ -1,13 +1,13 @@
-"""TAR05 (P3) — Interface web. Executar: streamlit run src/web.py
+"""TAR05 (P3) - Interface web. Executar: streamlit run src/web.py
 
-Usa as mesmas funções que a CLI (validate_url e predict). Nunca acede ao URL (REQ06).
+Usa as mesmas funções que a CLI (validate_url e predict). Não acede ao URL (REQ06).
 """
 
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-if str(ROOT) not in sys.path:  # o streamlit só acrescenta src/ ao path
+if str(ROOT) not in sys.path:  # o Streamlit só adiciona src/ ao sys.path
     sys.path.insert(0, str(ROOT))
 
 import pandas as pd  # noqa: E402
@@ -45,22 +45,22 @@ if enviado:
     else:
         r = predict(limpo)
         if r["label"] == "phishing":
-            st.error(f"Provável PHISHING — probabilidade {r['prob']:.0%}")
+            st.error(f"Provável phishing: probabilidade {r['prob']:.0%}")
         else:
-            st.success(f"Provavelmente legítimo — probabilidade de phishing {r['prob']:.0%}")
-        st.text(limpo)  # st.text não interpreta markdown nem HTML
+            st.success(f"Provavelmente legítimo: probabilidade de phishing {r['prob']:.0%}")
+        st.text(limpo)  # st.text mostra o texto sem interpretar Markdown nem HTML
         if r["razoes"]:
             st.subheader("Sinais encontrados")
             for razao in r["razoes"]:
                 st.write("- " + razao)
 
 res = bundle["resultados"]
-with st.expander("Como foi treinado o modelo"):
+with st.expander("Treino do modelo"):
     st.write(f"Modelo em uso: **{bundle['model_name'].replace('_', ' ')}** "
              f"(limiar {bundle.get('threshold', 0.5):.2f}), dataset PhiUSIIL "
              f"({res['dataset']['dominios_unicos_usados']} domínios únicos, divisão 70/15/15, semente {res['semente']}).")
     tabela = pd.DataFrame(res["teste"]).T[["accuracy", "precision", "recall", "f1", "roc_auc"]]
     tabela.index = ["Referência (classe maioritária)", "Regressão Logística", "Árvore de Decisão"]
     st.dataframe(tabela)
-    st.caption("Métricas no conjunto de teste. O modelo usa apenas o domínio registado; "
-               "os restantes sinais do URL são mostrados como explicação, mas não entram na decisão.")
+    st.caption("Métricas no conjunto de teste. O modelo usa apenas o domínio registado. "
+               "Os restantes sinais do URL são mostrados como explicação e não entram na decisão.")

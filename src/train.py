@@ -1,4 +1,4 @@
-"""TAR03/TAR04 (P2) — Treino e comparação: Regressão Logística vs Árvore de Decisão.
+"""TAR03/TAR04 (P2) - Treino e comparação: Regressão Logística vs Árvore de Decisão.
 
 Divisão 70/15/15 estratificada, semente fixa. Exporta o melhor modelo para models/.
 Executar: python -m src.train [--data caminho.csv]
@@ -51,9 +51,10 @@ def load_dataset(path: Path) -> tuple[pd.DataFrame, pd.Series, dict]:
     n_raw = len(df)
     df = df.dropna().drop_duplicates(subset="URL")
     n_urls = len(df)
-    # O modelo só vê o domínio registado. Vários URLs do mesmo domínio seriam linhas
-    # iguais, que podiam cair no treino e no teste ao mesmo tempo (fuga de informação).
-    # Ficamos com uma linha por domínio e descartamos domínios com rótulos contraditórios.
+    # Como o modelo só vê o domínio, URLs do mesmo domínio ficam com features iguais.
+    # Se o mesmo domínio aparecesse no treino e no teste, as métricas ficariam
+    # sobrestimadas (fuga de informação). Por isso, mantemos uma linha por domínio
+    # e removemos domínios com rótulos diferentes.
     df["dominio"] = [".".join(p for p in split_domain(u)[1:] if p) for u in df["URL"]]
     df = df[df["dominio"] != ""]
     n_labels = df.groupby("dominio")["label"].nunique()
@@ -113,7 +114,7 @@ def main() -> None:
     lr = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000, class_weight="balanced", random_state=SEED)).fit(X_tr, y_tr)
     t_lr = time.perf_counter() - t0
 
-    # Escolha da profundidade da árvore com o conjunto de validação (o de teste não é usado aqui).
+    # A profundidade da árvore é escolhida com o conjunto de validação. O de teste só é usado no fim.
     depth_scores = {}
     for d in DT_DEPTHS:
         m = DecisionTreeClassifier(max_depth=d, min_samples_leaf=5, class_weight="balanced", random_state=SEED).fit(X_tr, y_tr)
@@ -125,7 +126,8 @@ def main() -> None:
     t_dt = time.perf_counter() - t0
 
     candidatos = {"regressao_logistica": lr, "arvore_decisao": dt}
-    # Classes desequilibradas (~25% phishing): pesos equilibrados e limiar escolhido na validação.
+    # Só cerca de 25% dos domínios são phishing. Usamos pesos de classe equilibrados
+    # e escolhemos o limiar na validação.
     limiares = {k: best_threshold(m, X_val, y_val) for k, m in candidatos.items()}
     val_f1 = {k: round(v[1], 4) for k, v in limiares.items()}
     best_name = max(val_f1, key=val_f1.get)

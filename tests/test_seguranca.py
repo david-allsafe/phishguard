@@ -1,4 +1,4 @@
-"""TAR07/TAR08 (P4) — Testes de features, validação e segurança."""
+"""TAR07/TAR08 (P4) - Testes de features, validação e segurança."""
 
 import shutil
 import socket
@@ -37,7 +37,7 @@ def test_features_ip():
 def test_features_dominio_registado_ignora_subdominio_e_caminho():
     a = extract_features("https://www.istec.pt")
     b = extract_features("http://cursos.istec.pt/ctesp/ciberseguranca?x=1")
-    assert a == b  # o modelo só vê o domínio registado (ver features.py)
+    assert a == b  # o modelo só usa o domínio registado (ver features.py)
 
 
 def test_features_sufixo_composto():
@@ -87,8 +87,8 @@ def test_modelo_alterado_e_rejeitado(tmp_path):  # TST09
 
 
 # --- Sanidade: URLs fora do dataset -------------------------------------------------
-# Exemplos fictícios/construídos para verificar que o modelo não aprendeu o atalho
-# "URL com caminho = phishing" (ver limitações no README).
+# Exemplos construídos por nós para confirmar que o modelo não aprendeu a regra
+# "URL com caminho = phishing" (ver Limitações no README).
 
 @pytest.mark.parametrize("url", [
     "https://pt.wikipedia.org/wiki/Phishing",
