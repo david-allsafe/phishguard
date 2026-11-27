@@ -10,3 +10,5 @@ venv/
 # Datasets grandes e modelos gerados (regenerar com src/train.py)
 data/*.csv
 models/*.joblib
+# Exceção: o modelo do protótipo é pequeno e vai versionado com o seu SHA-256
+!models/phishguard.joblib

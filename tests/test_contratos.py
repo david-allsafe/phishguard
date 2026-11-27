@@ -1,4 +1,4 @@
-"""TAR07 (P4) — Testes aos contratos entre módulos."""
+"""TAR07 (P4) - Testes aos contratos entre módulos."""
 
 import pytest
 

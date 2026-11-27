@@ -1,4 +1,4 @@
-"""TAR05 (P3) — Interface. Executar: python -m src.app <url>"""
+"""TAR05 (P3) - Interface. Executar: python -m src.app <url>"""
 
 import sys
 
